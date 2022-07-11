@@ -3,6 +3,7 @@ const main = async () => {
     const waveContractFactory = await hre.ethers.getContractFactory("WavePortal");
     const waveContract = await waveContractFactory.deploy();
     await waveContract.deployed();
+    
 
     console.log("Contract deployed to:", waveContract.address);
     console.log("Contract deployed by:", owner.address);
@@ -12,6 +13,8 @@ const main = async () => {
 
     let waveTxn = await waveContract.wave();
     await waveTxn.wait();
+    waveTxn = await waveContract.wave();
+    await waveTxn.wait();
 
     waveCount = await waveContract.getTotalWaves();
 
@@ -19,6 +22,10 @@ const main = async () => {
     await waveTxn.wait();
 
     waveCount = await waveContract.getTotalWaves();
+
+    let waveAmount;
+    waveAmount = await waveContract.getAmounts();
+
 };
 
 const runMain = async () => {
