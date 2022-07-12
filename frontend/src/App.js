@@ -6,7 +6,7 @@ import abi from "./utils/WavePortal.json";
 
 export default function App() {
   const [currentAccount, setCurrentAccount] = useState("");
-  const contractAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
+  const contractAddress = "0xc8A977E758CbF55259aC68C8Fd6A47da2ceAB8c0";
   const contractABI = abi.abi;
   const [waves, setWaves] = useState(0);
   const [allWaves, setAllWaves] = useState([]);
@@ -78,7 +78,7 @@ export default function App() {
         let count = await wavePortalContract.getTotalWaves();
         console.log("Retrieved total wave count...", count.toNumber());
 
-        const waveTxn = await wavePortalContract.wave(text, {gasLimit: 300000});
+        const waveTxn = await wavePortalContract.wave(text, { gasLimit: 300000 });
         console.log("Mining...", waveTxn.hash);
 
         await waveTxn.wait();
@@ -145,6 +145,8 @@ export default function App() {
   * This runs our function when the page loads.
   */
   useEffect(() => {
+    checkIfWalletIsConnected();
+    getAmountOfWaves();
     let wavePortalContract;
   
     const onNewWave = (from, timestamp, message) => {
